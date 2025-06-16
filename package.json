@@ -1,0 +1,38 @@
+{
+  "name": "bskylifesim",
+  "version": "0.1.0",
+  "description": "Bluesky-based life sim",
+  "keywords": [
+    "life",
+    "sim"
+  ],
+  "homepage": "https://github.com/Milk-Cool/BskyLifeSim#readme",
+  "bugs": {
+    "url": "https://github.com/Milk-Cool/BskyLifeSim/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Milk-Cool/BskyLifeSim.git"
+  },
+  "license": "MIT",
+  "author": "Milk_Cool",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node sim.js",
+    "initmii": "node init.js"
+  },
+  "dependencies": {
+    "@atproto/api": "^0.15.15",
+    "better-sqlite3": "^11.10.0",
+    "dotenv": "^16.5.0",
+    "image-size": "^2.0.2",
+    "jimp": "^1.6.0",
+    "mii-js": "github:PretendoNetwork/mii-js#5d8eb8013514a13b0df6eb4a5bfd8b5a63fb9861"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/jimp": "^0.2.1",
+    "@types/node": "^24.0.2"
+  }
+}

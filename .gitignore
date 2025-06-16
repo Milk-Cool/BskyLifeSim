@@ -134,3 +134,19 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Package lock
+package-lock.json
+
+# Database
+data.db*
+
+# Mii images (cached)
+miis/
+
+# Resources
+res/*
+!res/README.md
+!res/*.map
+!res/star.png
+!res/squiggle.png
