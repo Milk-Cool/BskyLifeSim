@@ -76,6 +76,5 @@ const cycle = async () => {
         password: process.env.BSKY_PASSWORD
     });
 
-    cycle();
     setInterval(cycle, 5 * 60 * 1000);
 })();
