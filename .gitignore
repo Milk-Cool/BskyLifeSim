@@ -150,3 +150,4 @@ res/*
 !res/*.map
 !res/star.png
 !res/squiggle.png
+!res/news.png

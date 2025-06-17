@@ -5,6 +5,7 @@ import * as db from "./index.js";
 import { food, treasure } from "./items.js";
 import { imageSize } from "image-size";
 import * as imgUtils from "./image.js";
+import { generateNews } from "./news.js";
 
 const agent = new AtpAgent({
     service: "https://bsky.social"
@@ -26,8 +27,18 @@ const post = async (text, uploadedImage) => {
     });
 };
 
+const tryToPost = async (mii1, mii2, iconPath, itemBuf, text) => {
+    try {
+        const img = await imgUtils.create2ResIconItem(imgUtils.randBgPath(), mii1, mii2, iconPath, itemBuf);
+        const uploadedImage = await uploadPNG(img);
+        await post(text, uploadedImage);
+    } catch(e) {
+        if(process.env.DEBUG) console.error(e);
+    }
+}
+
 const cycle = async () => {
-    for(let i = 0; i < 3; i++) {
+    for(let i = 0; i < 2; i++) {
         const [mii1, mii2] = db.getRandomResidents(2);
         const relation = db.getRelation(mii1.id, mii2.id);
         let itemBuf = null, iconPath = null, text = null;
@@ -62,13 +73,13 @@ const cycle = async () => {
         } else continue;
         console.log(text);
 
-        try {
-            const img = await imgUtils.create2ResIconItem(imgUtils.randBgPath(), mii1.id, mii2.id, iconPath, itemBuf);
-            const uploadedImage = await uploadPNG(img);
-            await post(text, uploadedImage);
-        } catch(e) {
-            if(process.env.DEBUG) console.error(e);
-        }
+        await tryToPost(mii1.id, mii2.id, iconPath, itemBuf, text);
+    }
+
+    if(Math.random() < .3) {
+        const news = generateNews();
+        console.log(news.text);
+        await tryToPost(news.res1, news.res2, "news.png", news.item, news.text);
     }
 }
 
