@@ -27,7 +27,7 @@ const post = async (text, uploadedImage) => {
 };
 
 const cycle = async () => {
-    for(let i = 0; i < 8; i++) {
+    for(let i = 0; i < 3; i++) {
         const [mii1, mii2] = db.getRandomResidents(2);
         const relation = db.getRelation(mii1.id, mii2.id);
         let itemBuf = null, iconPath = null, text = null;
