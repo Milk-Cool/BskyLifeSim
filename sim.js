@@ -76,7 +76,7 @@ const cycle = async () => {
         await tryToPost(mii1.id, mii2.id, iconPath, itemBuf, text);
     }
 
-    if(Math.random() < .3) {
+    if(Math.random() < .07) {
         const news = generateNews();
         console.log(news.text);
         await tryToPost(news.res1, news.res2, "news.png", news.item, news.text);
