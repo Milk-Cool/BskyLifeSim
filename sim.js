@@ -66,7 +66,9 @@ const cycle = async () => {
             const img = await imgUtils.create2ResIconItem(imgUtils.randBgPath(), mii1.id, mii2.id, iconPath, itemBuf);
             const uploadedImage = await uploadPNG(img);
             await post(text, uploadedImage);
-        } catch(_) {}
+        } catch(e) {
+            if(process.env.DEBUG) console.error(e);
+        }
     }
 }
 
