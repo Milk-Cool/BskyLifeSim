@@ -1,0 +1,1 @@
+npm run initmii && npm run initmoney

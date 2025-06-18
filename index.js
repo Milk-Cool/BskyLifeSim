@@ -36,6 +36,12 @@ db.prepare(`CREATE TABLE IF NOT EXISTS relations (
     relation INTEGER
 )`).run();
 
+db.prepare(`CREATE TABLE IF NOT EXISTS balance (
+    id INTEGER PRIMARY KEY,
+    resident INTEGER,
+    balance INTEGER
+)`).run();
+
 export function residentsExist() {
     return !!db.prepare(`SELECT * FROM residents LIMIT 1`).get();
 }
@@ -83,4 +89,14 @@ export async function getMiiPNG(id) {
     const img = await mii.getMiiImage(resident.mii);
     fs.writeFileSync(path, img);
     return img;
+}
+
+export function getBalance(id) {
+    return db.prepare(`SELECT * FROM balance WHERE resident = ?`).get(id)?.balance || 0;
+}
+export function setBalance(id, balance) {
+    if(getBalance(id))
+        db.prepare(`UPDATE balance SET balance = ? WHERE id = ?`).run(balance, id);
+    else
+        db.prepare(`INSERT INTO balance (balance, resident) VALUES (?, ?)`).run(balance, id);
 }

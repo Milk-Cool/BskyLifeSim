@@ -6,6 +6,9 @@ import { food, treasure } from "./items.js";
 import { imageSize } from "image-size";
 import * as imgUtils from "./image.js";
 import { generateNews } from "./news.js";
+import fs from "fs";
+import { join } from "path";
+import { randomUUID } from "crypto";
 
 const agent = new AtpAgent({
     service: "https://bsky.social"
@@ -30,6 +33,13 @@ const post = async (text, uploadedImage) => {
 const tryToPost = async (mii1, mii2, iconPath, itemBuf, text) => {
     try {
         const img = await imgUtils.create2ResIconItem(imgUtils.randBgPath(), mii1, mii2, iconPath, itemBuf);
+        if(process.env.DEBUG) {
+            if(!fs.existsSync("debug")) fs.mkdirSync("debug");
+            const fname = randomUUID() + ".png";
+            fs.writeFileSync(join("debug", fname), img);
+            console.log(fname);
+            return;
+        }
         const uploadedImage = await uploadPNG(img);
         await post(text, uploadedImage);
     } catch(e) {
@@ -42,6 +52,7 @@ const cycle = async () => {
         const [mii1, mii2] = db.getRandomResidents(2);
         const relation = db.getRelation(mii1.id, mii2.id);
         let itemBuf = null, iconPath = null, text = null;
+        const bal = db.getBalance(mii1.id);
         if(relation === 0 && Math.random() < .75) {
             // new friends
             iconPath = imgUtils.iconPaths.friend;
@@ -70,6 +81,13 @@ const cycle = async () => {
             iconPath = imgUtils.iconPaths.breakup;
             text = `${mii1.name} and ${mii2.name} just broke up!`;
             db.setRelation(mii1.id, mii2.id, 1);
+        } else if(bal >= 5 &&  Math.random() < 0.15) {
+            iconPath = imgUtils.iconPaths.money;
+            const randTreasure = treasure.getRandomItemIndex();
+            itemBuf = treasure.getItemPNG(randTreasure);
+            const sum = Math.floor(Math.random() * 10) + 5;
+            text = `${mii1.name} bought a ${treasure.getItemName(randTreasure)} from ${mii2.name} for $${sum}!`;
+            db.setBalance(mii1.id, bal - sum);
         } else continue;
         console.log(text);
 

@@ -1,6 +1,6 @@
 {
   "name": "bskylifesim",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Bluesky-based life sim",
   "keywords": [
     "life",
@@ -20,7 +20,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node sim.js",
-    "initmii": "node init.js"
+    "initmii": "node init.js",
+    "initmoney": "node initmoney.js"
   },
   "dependencies": {
     "@atproto/api": "^0.15.15",
