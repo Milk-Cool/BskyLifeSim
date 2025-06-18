@@ -48,6 +48,7 @@ const tryToPost = async (mii1, mii2, iconPath, itemBuf, text) => {
 }
 
 const cycle = async () => {
+    // Relationship changes
     for(let i = 0; i < 2; i++) {
         const [mii1, mii2] = db.getRandomResidents(2);
         const relation = db.getRelation(mii1.id, mii2.id);
@@ -94,6 +95,7 @@ const cycle = async () => {
         await tryToPost(mii1.id, mii2.id, iconPath, itemBuf, text);
     }
 
+    // News and diaries
     if(Math.random() < .07) {
         const news = generateNews();
         console.log(news.text);
@@ -103,6 +105,14 @@ const cycle = async () => {
         const entry = generateDiary();
         console.log(entry.text);
         await tryToPost(entry.res1, entry.res2, imgUtils.iconPaths.diary, entry.item, entry.text);
+    }
+
+    // Jobs
+    for(let i = 0; i < 5; i++) {
+        const randomResident = db.getRandomResident();
+        const pay = Math.floor(Math.random() * 100);
+        db.setBalance(db.getBalance(randomResident.id) + pay);
+        console.log(`${randomResident.name} earned $${pay}!`);
     }
 }
 
