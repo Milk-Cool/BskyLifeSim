@@ -16,9 +16,22 @@ const newsTypes = {
     "treasureConvention": "The annual $t convention has started today by $1. The biggest fan of $ts, $2, said: \"This is like the best thing EVER. I'm never gonna forget this\"."
 };
 
-export const generateNews = () => {
+const diaryTypes = {
+    "foodCafe": "$1's diary: \"Today I met $2 at a $f café. We had a small talk about how good $f is and eventually decided to visit this place every week. So excited!\"",
+    "giftTreasure": "$1's diary: \"$2 gave me a $t today!! I have an obsession with these, so this is a perfect gift! Would've never expected that from $2 but here we are\"",
+    "foundTreasure": "$1's diary: \"I found a $t today. Not sure who it belings to, but I think I'm gonna ask $2 first. Going to keep it at home for now though.\"",
+    "foodMeme": "$1's diary: \"I've created a meme!!! I made a meme about $f, and then $2 posted it on their Miibook page and now it's incredibly popular!!\"",
+    "gamingConvention": "$1's diary: \"Today, $2 and I went to a gaming convention. It was fun and we met a couple of new friends there :)\"",
+    "catFeed": "$1's diary: \"$2 and I met a very cute cat today! While I was making photos of it, $2 brought some food and we fed the cat.\"",
+    "embarassFood": "$1's diary: \"Today I told my coworker $2 about how much i love $f. However, she and a couple of their friends made fun of me. T_T\"",
+    "bookFood": "$1's diary: \"Today I bought a recipe book about $f and its variations. But the book is so poorly written that it makes me think it's a scam of some sort. Just a waste of money :(\"",
+    "treasureLost": "$1's diary: \"I think I lost my $t today :( Hope someone will find it and return it...\"",
+    "vacation": "$1's diary: \"I just bought some tickets to $t island for a vacation!! Can't wait for it!!\""
+};
+
+export const generateRandom = types => {
     const [mii1, mii2] = getRandomResidents(2);
-    let news = Object.values(newsTypes)[Math.floor(Math.random() * Object.keys(newsTypes).length)];
+    let news = Object.values(types)[Math.floor(Math.random() * Object.keys(types).length)];
     let itemBuf = null;
     if(news.includes("$t")) {
         const randItem = treasure.getRandomItemIndex();
@@ -36,3 +49,6 @@ export const generateNews = () => {
         text: news, item: itemBuf
     };
 }
+
+export const generateNews = () => generateRandom(newsTypes);
+export const generateDiary = () => generateRandom(diaryTypes);

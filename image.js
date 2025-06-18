@@ -11,7 +11,9 @@ export const iconPaths = {
     fight: "squiggle.png",
     love: "heart.png",
     breakup: "heartbreak.png",
-    money: "money.png"
+    money: "money.png",
+    diary: "book.png",
+    news: "news.png",
 };
 
 export const create2ResIconItem = async (bgPath, id1, id2, iconPath, itemBuf) => {

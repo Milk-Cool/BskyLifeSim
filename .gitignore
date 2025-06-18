@@ -152,6 +152,8 @@ res/*
 !res/squiggle.png
 !res/news.png
 !res/money.png
+!res/book.png
+
 
 # Debug dir
 debug/

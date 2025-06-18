@@ -5,7 +5,7 @@ import * as db from "./index.js";
 import { food, treasure } from "./items.js";
 import { imageSize } from "image-size";
 import * as imgUtils from "./image.js";
-import { generateNews } from "./news.js";
+import { generateDiary, generateNews } from "./news.js";
 import fs from "fs";
 import { join } from "path";
 import { randomUUID } from "crypto";
@@ -97,7 +97,12 @@ const cycle = async () => {
     if(Math.random() < .07) {
         const news = generateNews();
         console.log(news.text);
-        await tryToPost(news.res1, news.res2, "news.png", news.item, news.text);
+        await tryToPost(news.res1, news.res2, imgUtils.iconPaths.news, news.item, news.text);
+    }
+    if(Math.random() < .07) {
+        const entry = generateDiary();
+        console.log(entry.text);
+        await tryToPost(entry.res1, entry.res2, imgUtils.iconPaths.diary, entry.item, entry.text);
     }
 }
 
