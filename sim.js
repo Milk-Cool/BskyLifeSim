@@ -53,6 +53,7 @@ const cycle = async () => {
         const relation = db.getRelation(mii1.id, mii2.id);
         let itemBuf = null, iconPath = null, text = null;
         const bal = db.getBalance(mii1.id);
+        const sum = Math.floor(Math.random() * 10) + 5;
         if(relation === 0 && Math.random() < .75) {
             // new friends
             iconPath = imgUtils.iconPaths.friend;
@@ -81,11 +82,10 @@ const cycle = async () => {
             iconPath = imgUtils.iconPaths.breakup;
             text = `${mii1.name} and ${mii2.name} just broke up!`;
             db.setRelation(mii1.id, mii2.id, 1);
-        } else if(bal >= 5 &&  Math.random() < 0.15) {
+        } else if(bal >= sum &&  Math.random() < 0.15) {
             iconPath = imgUtils.iconPaths.money;
             const randTreasure = treasure.getRandomItemIndex();
             itemBuf = treasure.getItemPNG(randTreasure);
-            const sum = Math.floor(Math.random() * 10) + 5;
             text = `${mii1.name} bought a ${treasure.getItemName(randTreasure)} from ${mii2.name} for $${sum}!`;
             db.setBalance(mii1.id, bal - sum);
         } else continue;
